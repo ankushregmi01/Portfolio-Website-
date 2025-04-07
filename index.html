@@ -4,14 +4,48 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ✅ Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Ankush Regmi | DevOps Engineer</title>
+    <style>
+        /* Added styles for logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .logo-img {
+            height: 40px;
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        /* Canvas positioning fix */
+        #codeRain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Place behind all content */
+            pointer-events: none; /* Allow clicks to pass through */
+        }
+    </style>
 </head>
 <body>
+    <!-- Canvas moved here to be behind all content -->
+    <canvas id="codeRain"></canvas>
+    
     <header>
         <nav>
-            <div class="logo">Ankush's Home</div>
+            <div class="logo">
+                <img src="images/favicon.png" alt="Logo" class="logo-img">
+                Ankush's Home
+            </div>            
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
@@ -36,14 +70,14 @@
                 <a href="#" class="social-icon"><i class="fab fa-behance"></i></a>
             </div>
             <h1>I am Ankush Regmi</h1>
-            <p>i'm Ankush, professional DevOps Engineer with long time experience in this field</p>
+            <p>I'm Ankush, professional DevOps Engineer with long time experience in this field</p>
             <div class="hero-buttons">
                 <button class="btn btn-portfolio">My Portfolio</button>
                 <button class="btn btn-youtube"><i class="fas fa-play"></i></button>
             </div>
         </div>
         <div class="hero-image">
-            <img src="facebook ankush.jpg" alt="Ankush Regmi">
+            <img src="images/facebook ankush.jpg" alt="Ankush Regmi">
         </div>
     </section>
 
@@ -55,7 +89,7 @@
         <div class="about-content">
             <div class="about-image-container">
                 <div class="about-image-wrapper">
-                    <img src="Pasted image.png" alt="Ankush Regmi Profile" class="about-image">
+                    <img src="images/profile.png" alt="Ankush Regmi Profile" class="about-image">
                 </div>
             </div>
             <div class="about-text">
@@ -105,5 +139,45 @@
     </footer>
     
     <script src="script.js"></script>
+    <script>
+        const canvas = document.getElementById("codeRain");
+        const ctx = canvas.getContext("2d");
+    
+        // Set canvas size
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+    
+        const characters = "01<>{}=+-*/"; // You can customize this string
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+    
+        function draw() {
+            ctx.fillStyle = "rgba(30, 33, 58, 0.1)"; // Smooth dark background blend
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+            ctx.fillStyle = "#d6b4f7"; // Light purple color
+            ctx.font = fontSize + "px monospace";
+    
+            for (let i = 0; i < drops.length; i++) {
+                const char = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+    
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+    
+                drops[i]++;
+            }
+        }
+    
+        setInterval(draw, 33);
+    
+        // Resize canvas on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>    
 </body>
 </html>
